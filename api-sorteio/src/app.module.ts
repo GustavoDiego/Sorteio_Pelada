@@ -6,17 +6,19 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PlayersModule } from './players/players.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DrawModule } from './draw/draw.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     AuthModule,
     UsersModule,
     PlayersModule,
+    DrawModule,
   ],
   controllers: [AppController],
   providers: [AppService],
