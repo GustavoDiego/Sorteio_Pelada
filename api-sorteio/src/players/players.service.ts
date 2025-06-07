@@ -10,7 +10,7 @@ export class PlayersService {
   constructor(@InjectConnection() private readonly connection: Connection) {}
 
   private getModel(userId: string): Model<Player> {
-    return this.connection.model(`jogadores_${userId}`, PlayerSchema, `jogadores_${userId}`);
+    return this.connection.model(`Jogadores_${userId}`, PlayerSchema, `Jogadores_${userId}`);
   }
 
   async create(userId: string, dto: CreatePlayerDto) {
@@ -20,6 +20,7 @@ export class PlayersService {
   }
 
   async findAll(userId: string) {
+    console.log(userId);
     const model = this.getModel(userId);
     return model.find().exec();
   }

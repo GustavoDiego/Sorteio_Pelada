@@ -34,14 +34,14 @@ export class PlayersController {
   @ApiBody({ type: CreatePlayerDto })
   @ApiResponse({ status: 201, description: 'Jogador criado com sucesso' })
   create(@Request() req, @Body() dto: CreatePlayerDto) {
-    return this.playersService.create(req.user.sub, dto);
+    return this.playersService.create(req.user._id, dto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Listar todos os jogadores do usuário logado' })
   @ApiResponse({ status: 200, description: 'Lista de jogadores retornada' })
   findAll(@Request() req) {
-    return this.playersService.findAll(req.user.sub);
+    return this.playersService.findAll(req.user._id);
   }
 
   @Get(':id')
@@ -49,7 +49,7 @@ export class PlayersController {
   @ApiParam({ name: 'id', description: 'ID do jogador' })
   @ApiResponse({ status: 200, description: 'Jogador encontrado' })
   findOne(@Request() req, @Param('id') id: string) {
-    return this.playersService.findById(req.user.sub, id);
+    return this.playersService.findById(req.user._id, id);
   }
 
   @Put(':id')
@@ -58,7 +58,7 @@ export class PlayersController {
   @ApiBody({ type: UpdatePlayerDto })
   @ApiResponse({ status: 200, description: 'Jogador atualizado' })
   update(@Request() req, @Param('id') id: string, @Body() dto: UpdatePlayerDto) {
-    return this.playersService.update(req.user.sub, id, dto);
+    return this.playersService.update(req.user._id, id, dto);
   }
 
   @Delete(':id')
@@ -66,6 +66,6 @@ export class PlayersController {
   @ApiParam({ name: 'id', description: 'ID do jogador' })
   @ApiResponse({ status: 200, description: 'Jogador removido' })
   remove(@Request() req, @Param('id') id: string) {
-    return this.playersService.remove(req.user.sub, id);
+    return this.playersService.remove(req.user._id, id);
   }
 }
