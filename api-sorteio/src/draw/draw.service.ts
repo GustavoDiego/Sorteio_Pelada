@@ -4,19 +4,33 @@ import { TeamResult } from 'src/shared/interfaces/teamResult.interface';
 
 @Injectable()
 export class DrawService {
+  private readonly attrs = ['forca', 'velocidade', 'passe', 'chute', 'corpo', 'esperteza'] as const;
+
+  /**
+   * Sorteia times obedecendo a regra: preencher cada time até o tamanho
+   * máximo e deixar o último com o restante (ex.: 10 jogadores, 3 times, 4/jogo → 4‑4‑2).
+   */
   sortearTimes(jogadores: Player[], numeroDeTimes: number, tamanhoPorTime: number): Player[][] {
     if (jogadores.length < numeroDeTimes) {
       throw new Error('Número de jogadores insuficiente para a quantidade de times');
     }
 
-    const permutacaoInicial = this.shuffle(jogadores);
-    const melhoresTimes = this.gerarMelhorDistribuicao(
-      permutacaoInicial,
-      numeroDeTimes,
-      tamanhoPorTime,
-      500,
-    );
-    return melhoresTimes.times;
+    if (tamanhoPorTime > 0 && jogadores.length > numeroDeTimes * tamanhoPorTime) {
+      throw new Error(
+        'Capacidade máxima dos times excedida — aumente o tamanhoPorTime ou o nº de times',
+      );
+    }
+
+    const players = this.sanitize(jogadores);
+    const melhor = this.gerarMelhorDistribuicao(players, numeroDeTimes, tamanhoPorTime, 500);
+
+    if (melhor.metric !== 0) {
+      console.warn(
+        `Nenhuma distribuição perfeita encontrada. Retornando melhor distribuição com métrica ${melhor.metric}`,
+      );
+    }
+
+    return melhor.times;
   }
 
   private gerarMelhorDistribuicao(
@@ -25,80 +39,91 @@ export class DrawService {
     tamanho: number,
     tentativas: number,
   ): TeamResult {
-    let melhorMetric = Number.MAX_VALUE;
-    let melhorDistribuicao: Player[][] = [];
-    const baseTolerancia = 0.1; // ponto de partida
+    let melhorMetric = Number.POSITIVE_INFINITY;
+    let melhor: Player[][] = [];
 
     for (let i = 0; i < tentativas; i++) {
-      const distribuicao = this.shuffle(jogadores);
-      const grupos = this.distribuir(distribuicao, k, tamanho);
-      const metric = this.calcularDesvio(grupos);
+      const grupos = this.distribuir(this.shuffle(jogadores), k, tamanho);
+      const metric = this.metric(grupos);
+      console.log(`Tentativa ${i + 1}: ${metric}`);
 
-      // atualiza se encontrou uma distribuição melhor
       if (metric < melhorMetric) {
         melhorMetric = metric;
-        melhorDistribuicao = grupos;
-      }
-
-      // aplica tolerância crescente após 30 tentativas
-      if (i >= 30) {
-        const toleranciaAtual = melhorMetric + baseTolerancia * Math.pow(2, (i - 30) / 10);
-
-        if (metric <= toleranciaAtual) {
-          melhorDistribuicao = grupos;
-          break; // aceitável, encerra cedo
-        }
+        melhor = grupos;
+        if (metric === 0) break;
       }
     }
 
-    return { times: melhorDistribuicao, metric: melhorMetric };
+    return { times: melhor, metric: melhorMetric };
   }
 
+  /**
+   * Distribuição por blocos: preenche cada time até o limite antes de passar ao próximo.
+   * Se tamanhoPorTime = 0 (ilimitado) usa round‑robin antigo.
+   */
   private distribuir(jogadores: Player[], k: number, tamanho: number): Player[][] {
-    const total = jogadores.length;
-    const base = Math.floor(total / k);
-    const extras = total % k; // primeiros `extras` times receberão +1 jogador
-
-    const times: Player[][] = [];
-    let index = 0;
-
-    for (let i = 0; i < k; i++) {
-      const size = i < extras ? base + 1 : base;
-      const time = jogadores.slice(index, index + size);
-      times.push(time);
-      index += size;
+    if (tamanho > 0) {
+      const times: Player[][] = [];
+      let idx = 0;
+      for (let i = 0; i < k; i++) {
+        const restante = jogadores.length - idx;
+        const capacidade = i === k - 1 ? restante : Math.min(tamanho, restante);
+        times.push(jogadores.slice(idx, idx + capacidade));
+        idx += capacidade;
+      }
+      return times;
     }
 
+    // Sem limite de tamanho: round‑robin
+    const times: Player[][] = Array.from({ length: k }, () => []);
+    jogadores.forEach((j, i) => times[i % k].push(j));
     return times;
   }
 
-  private calcularDesvio(times: Player[][]): number {
-    const atributos = ['forca', 'velocidade', 'passe', 'chute', 'corpo', 'esperteza'] as const;
-    const mediasPorTime = times.map((time) => {
-      const soma = atributos.map((attr) => time.reduce((acc, jogador) => acc + jogador[attr], 0));
-      return soma.map((v) => v / time.length);
-    });
-
-    const mediasGlobais = atributos.map((_, i) => {
-      const soma = mediasPorTime.reduce((acc, time) => acc + time[i], 0);
-      return soma / mediasPorTime.length;
-    });
-
-    let desvioTotal = 0;
-    for (const mediaTime of mediasPorTime) {
-      for (let i = 0; i < atributos.length; i++) {
-        desvioTotal += Math.pow(mediaTime[i] - mediasGlobais[i], 2);
-      }
-    }
-    return desvioTotal;
+  private metric(times: Player[][]): number {
+    const global = this.mean(times.flat());
+    return times.reduce((total, time) => {
+      const media = this.mean(time);
+      const somaTime = this.attrs.reduce((acc, attr) => {
+        const diff = media[attr] - global[attr];
+        return acc + diff * diff;
+      }, 0);
+      return total + somaTime;
+    }, 0);
   }
 
-  private shuffle<T>(array: T[]): T[] {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+  private mean(jogadores: Player[]): Record<(typeof this.attrs)[number], number> {
+    const sums = this.attrs.reduce((acc, attr) => ({ ...acc, [attr]: 0 }), {} as any);
+    jogadores.forEach((j) => this.attrs.forEach((attr) => (sums[attr] += (j as any)[attr])));
+    const divisor = jogadores.length || 1;
+    return this.attrs.reduce((acc, attr) => ({ ...acc, [attr]: sums[attr] / divisor }), {} as any);
+  }
+
+  private sanitize(players: Player[]): Player[] {
+    return players.map((p) => {
+      const copy: any = { ...p };
+      this.attrs.forEach((attr) => {
+        const val = this.extractAttr(p, attr);
+        copy[attr] = Number.isFinite(val) ? val : 0;
+      });
+      return copy;
+    });
+  }
+
+  private extractAttr(player: any, attr: string): number {
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+    const target = norm(attr);
+    for (const key of Object.keys(player)) {
+      if (norm(key) === target) return Number(player[key]);
     }
-    return arr;
+    return NaN;
+  }
+
+  private shuffle<T>(arr: T[]): T[] {
+    return [...arr].sort(() => Math.random() - 0.5);
   }
 }

@@ -1,0 +1,148 @@
+/* draw.page.component.scss */
+
+:host {
+  display: block;
+  background-color: #121212;
+  color: #fff;
+}
+
+.resultado-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e74c3c;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.time-card {
+  background: #1c1c1e;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: #e74c3c;
+  }
+
+  .team-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #e74c3c;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .players-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid #333;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+/* === As suas ações agora sim “pegam” === */
+.botoes {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+
+  button.resortear.p-button {
+    min-width: 140px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+  }
+
+  button.compartilhar.p-button {
+    min-width: 140px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+    transition: background-color 0.2s, transform 0.2s, color 0.2s;
+
+    &:hover {
+      background-color: #e74c3c;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+
+    button.p-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+/* Solução recomendada para o final de draw.page.component.scss */
+
+/* Estilo para o botão 'Resortear' */
+:host ::ng-deep .p-button.resortear {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-button.resortear:hover {
+  background-color: #c0392b !important;
+}
+
+/* Estilo para o botão 'Compartilhar' */
+:host ::ng-deep .p-button.compartilhar {
+  background-color: transparent !important;
+  color: #e74c3c !important;
+  border: 2px solid #e74c3c !important;
+}
+
+:host ::ng-deep .p-button.compartilhar:hover {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}

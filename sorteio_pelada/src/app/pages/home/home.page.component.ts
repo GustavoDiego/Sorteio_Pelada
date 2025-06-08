@@ -14,6 +14,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog'
 import { RegistroJogadorModalComponent } from '../../shared/modals/registro-jogador-modal/registro-jogador-modal.component'
 import { EditarJogadorModalComponent } from '../../shared/modals/editar-jogador-modal/editar-jogador-modal.component'
 import { DrawModalComponent } from '../../shared/modals/draw-modal/draw-modal.component'
+import { Router } from '@angular/router'
 
 @Component({
   standalone: true,
@@ -42,7 +43,8 @@ export class HomePage implements OnInit {
     private playerService: PlayersService,
     private confirmation: ConfirmationService,
     private message: MessageService,
-    private dialog: DialogService
+    private dialog: DialogService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -121,32 +123,35 @@ export class HomePage implements OnInit {
   }
 
   openDrawModal() {
-      if (this.selectedPlayers.length === 0) {
-        this.message.add({
-          severity: 'warn',
-          summary: 'Nenhum jogador selecionado',
-          detail: 'Selecione ao menos um jogador para sortear'
-        })
-        return
-      }
-
-      const ref = this.dialog.open(DrawModalComponent, {
-        header: '',
-        width: '400px',
-        contentStyle: { padding: '0' },
-        dismissableMask: true,
-        closable: false,
-        styleClass: 'no-dialog-wrapper',
-        data: { jogadores: this.selectedPlayers }
+    if (this.selectedPlayers.length === 0) {
+      this.message.add({
+        severity: 'warn',
+        summary: 'Nenhum jogador selecionado',
+        detail: 'Selecione ao menos um jogador para sortear'
       })
-
-      ref.onClose.subscribe((result) => {
-        if (result) {
-          // Aqui você pode exibir os times ou navegar para uma página de exibição
-          console.log('Times sorteados:', result)
-        }
-      })
+      return
     }
+
+    const ref = this.dialog.open(DrawModalComponent, {
+      header: '',
+      width: '400px',
+      contentStyle: { padding: '0' },
+      dismissableMask: true,
+      closable: false,
+      styleClass: 'no-dialog-wrapper',
+      data: { jogadores: this.selectedPlayers }
+    })
+
+    ref.onClose.subscribe((result: Player[][]) => {
+      if (result && Array.isArray(result)) {
+        this.router.navigate(['/draw'], {
+          state: { times: result }
+        })
+      }
+    })
+  }
+
+
 
   clear(table: any) {
     table.clear()

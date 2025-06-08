@@ -1,0 +1,35 @@
+<!-- draw.page.component.html -->
+
+<app-navbar></app-navbar>
+
+<div class="resultado-container">
+  <h1 class="titulo">Resultado do Sorteio</h1>
+
+  <div #captureArea id="captureArea" class="times-grid">
+    <div *ngFor="let team of times; let i = index" class="time-card">
+      <h2 class="team-title">Time {{ i + 1 }}</h2>
+      <ul class="players-list">
+        <li *ngFor="let jogador of team">{{ jogador.Nome }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="botoes">
+    <button
+      pButton
+      class="p-button resortear"
+      label="Resortear"
+      icon="pi pi-refresh"
+      (click)="resortear()"
+    ></button>
+
+    <button
+      pButton
+      class="p-button compartilhar"
+      label="Compartilhar"
+      icon="pi pi-share-alt"
+      (click)="compartilhar()"
+    ></button>
+
+  </div>
+</div>

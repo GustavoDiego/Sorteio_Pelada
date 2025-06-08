@@ -4,25 +4,25 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class Player extends Document {
   @Prop({ required: true })
-  nome: string;
+  Nome: string;
 
   @Prop({ required: true })
-  forca: number;
+  Força: number;
 
   @Prop({ required: true })
-  velocidade: number;
+  Velocidade: number;
 
   @Prop({ required: true })
-  passe: number;
+  Passe: number;
 
   @Prop({ required: true })
-  chute: number;
+  Chute: number;
 
   @Prop({ required: true })
-  corpo: number;
+  Corpo: number;
 
   @Prop({ required: true })
-  esperteza: number;
+  Esperteza: number;
 
   @Prop({ required: true })
   userId: string;

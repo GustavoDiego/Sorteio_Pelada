@@ -24,6 +24,12 @@ export const routes: Routes = [
       import('./pages/home/home.page.component').then(m => m.HomePage)
   },
   {
+    path: 'draw',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/draw/draw.page.component').then(m => m.DrawPageComponent)
+  },
+  {
     path: '**',
     redirectTo: 'login'
   }
