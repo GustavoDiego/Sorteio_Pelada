@@ -104,7 +104,7 @@ export class DrawService {
       const copy: any = { ...p };
       this.attrs.forEach((attr) => {
         const val = this.extractAttr(p, attr);
-        copy[attr] = Number.isFinite(val) ? val : 0;
+        copy[attr] = Number.isFinite(val) ? val : attr === 'chute' ? 3 : 0;
       });
       return copy;
     });
