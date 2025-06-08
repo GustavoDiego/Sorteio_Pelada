@@ -42,15 +42,18 @@ export class DrawService {
   }
 
   private distribuir(jogadores: Player[], k: number, tamanho: number): Player[][] {
-    const times: Player[][] = Array.from({ length: k }, () => []);
+    const total = jogadores.length;
+    const base = Math.floor(total / k);
+    const extras = total % k; // primeiros `extras` times receberão +1 jogador
+
+    const times: Player[][] = [];
     let index = 0;
 
-    for (const jogador of jogadores) {
-      while (times[index].length >= tamanho) {
-        index = (index + 1) % k;
-      }
-      times[index].push(jogador);
-      index = (index + 1) % k;
+    for (let i = 0; i < k; i++) {
+      const size = i < extras ? base + 1 : base;
+      const time = jogadores.slice(index, index + size);
+      times.push(time);
+      index += size;
     }
 
     return times;

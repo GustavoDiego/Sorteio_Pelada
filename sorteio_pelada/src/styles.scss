@@ -8,3 +8,22 @@ body {
   background-color: #121212;
   color: white;
 }
+/* Aplica ao container externo do modal PrimeNG */
+/* Remove completamente a moldura, borda e padding do PrimeNG */
+.no-dialog-wrapper .p-dialog {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.no-dialog-wrapper .p-dialog-content {
+  background: transparent !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.no-dialog-wrapper .p-dialog-header,
+.no-dialog-wrapper .p-dialog-footer {
+  display: none !important;
+}

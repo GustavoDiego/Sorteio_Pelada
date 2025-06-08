@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { Register.pageComponent } from './register.page.component';
+import { ConfirmacaoRemocaoModalComponent } from './confirmacao-remocao-modal.component';
 
-describe('Register.pageComponent', () => {
-  let component: Register.pageComponent;
-  let fixture: ComponentFixture<Register.pageComponent>;
+describe('ConfirmacaoRemocaoModalComponent', () => {
+  let component: ConfirmacaoRemocaoModalComponent;
+  let fixture: ComponentFixture<ConfirmacaoRemocaoModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Register.pageComponent ]
+      declarations: [ ConfirmacaoRemocaoModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Register.pageComponent);
+    fixture = TestBed.createComponent(ConfirmacaoRemocaoModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

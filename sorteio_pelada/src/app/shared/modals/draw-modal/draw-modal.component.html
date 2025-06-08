@@ -1,0 +1,35 @@
+<p-toast></p-toast>
+
+<div class="draw-modal-container">
+  <button class="close-button" type="button" (click)="dialogRef.close()">×</button>
+
+  <form (ngSubmit)="sortear()" class="draw-form">
+    <h2 class="title">Sortear Times</h2>
+
+    <label for="jogadoresPorTime">Jogadores por time</label>
+    <input
+      id="jogadoresPorTime"
+      type="number"
+      pInputText
+      min="1"
+      [max]="maxJogadores"
+      [(ngModel)]="jogadoresPorTime"
+      (ngModelChange)="recalcularTimes()"
+      name="jogadoresPorTime"
+      required
+    />
+
+    <div class="info">
+      Serão formados {{ numeroDeTimes }} times
+    </div>
+
+    <div class="actions">
+      <button pButton type="submit" label="Sortear" aria-label="sortear" icon="pi pi-play"></button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <p-progressSpinner strokeWidth="6" styleClass="spinner" />
+      <p class="loading-text">Sorteando times... Esse processo pode demorar um pouco.</p>
+    </div>
+  </form>
+</div>

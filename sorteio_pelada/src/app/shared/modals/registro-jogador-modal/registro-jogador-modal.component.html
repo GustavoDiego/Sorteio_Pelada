@@ -1,0 +1,28 @@
+<p-toast></p-toast>
+
+<div class="custom-modal-container">
+  <button class="close-button" type="button" (click)="close()">×</button>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="modal-form">
+    <h2 class="title">Novo Jogador</h2>
+
+    <ng-container *ngFor="let campo of ['nome','forca','velocidade','passe','chute','corpo','esperteza']">
+      <input
+        pInputText
+        [type]="campo === 'nome' ? 'text' : 'number'"
+        [formControlName]="campo"
+        [placeholder]="campo.charAt(0).toUpperCase() + campo.slice(1)"
+        [min]="0"
+        [max]="5"
+      />
+      <small class="error" *ngIf="form.controls[campo].touched && form.controls[campo].errors">
+        {{ getErrorMessage(campo) }}
+      </small>
+    </ng-container>
+
+    <button pButton type="submit" [disabled]="loading">Cadastrar</button>
+
+    <div class="loading" *ngIf="loading">
+      <p-progressSpinner strokeWidth="6" animationDuration="0.5s" styleClass="spinner" />
+    </div>
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<p-toast></p-toast>
+
+<div class="custom-modal-container">
+  <button class="close-button" type="button" aria-label="Fechar modal" (click)="dialogRef.close()">×</button>
+
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="modal-form">
+    <h2 class="title">Editar Jogador</h2>
+
+    <ng-container *ngFor="let campo of campos">
+      <label [for]="campo">{{ formatarLabel(campo) }}</label>
+      <input
+        pInputText
+        [id]="campo"
+        [type]="campo === 'nome' ? 'text' : 'number'"
+        [formControlName]="campo"
+        [min]="0"
+        [max]="5"
+      />
+      <small class="error" *ngIf="form.controls[campo].touched && form.controls[campo].errors">
+        {{ getErrorMessage(campo) }}
+      </small>
+    </ng-container>
+
+
+    <div class="modal-actions">
+        <button pButton type="submit" icon="pi pi-save" label="Salvar" aria-label=""></button>
+        <button pButton type="button" icon="pi pi-trash" label="Remover" class="p-button-danger" aria-label="" (click)="confirmarRemocao()"></button>
+
+    </div>
+
+    <div class="loading" *ngIf="loading">
+      <p-progressSpinner strokeWidth="6" animationDuration="0.5s" styleClass="spinner" />
+    </div>
+  </form>
+</div>

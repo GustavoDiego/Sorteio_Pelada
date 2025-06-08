@@ -24,7 +24,7 @@ export const environment : AppEnvironment= {
       endpoints: {
         'login': 'auth/login',
         'register': 'auth/register',
-        'me': 'auth/me',
+        'me': 'auth/profile',
         'jogadores': 'players',
         'jogador-detalhe': 'players/:id',
         'criar-jogador': 'players',
