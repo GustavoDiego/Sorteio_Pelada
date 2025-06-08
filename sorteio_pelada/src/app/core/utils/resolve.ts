@@ -1,4 +1,4 @@
-import { environment } from '../../../enviroments/enviroment'
+import { environment } from '../../../environments/environment'
 
 function resolve(
   target: string,

@@ -32,6 +32,7 @@
     "@angular-devkit/build-angular": "^19.2.12",
     "@angular/cli": "^19.2.12",
     "@angular/compiler-cli": "^19.2.0",
+    "@flydotio/dockerfile": "^0.7.10",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "20.0.0",
     "eslint": "^9.28.0",

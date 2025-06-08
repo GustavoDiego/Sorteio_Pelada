@@ -27,6 +27,7 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Token JWT gerado' })
   @ApiResponse({ status: 401, description: 'Credenciais inválidas' })
   async login(@Request() req) {
+    console.log('iu')
     return this.authService.login(req.user);
   }
 
