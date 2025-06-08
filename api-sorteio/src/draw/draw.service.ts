@@ -27,14 +27,27 @@ export class DrawService {
   ): TeamResult {
     let melhorMetric = Number.MAX_VALUE;
     let melhorDistribuicao: Player[][] = [];
+    const baseTolerancia = 0.1; // ponto de partida
 
     for (let i = 0; i < tentativas; i++) {
       const distribuicao = this.shuffle(jogadores);
       const grupos = this.distribuir(distribuicao, k, tamanho);
       const metric = this.calcularDesvio(grupos);
+
+      // atualiza se encontrou uma distribuição melhor
       if (metric < melhorMetric) {
         melhorMetric = metric;
         melhorDistribuicao = grupos;
+      }
+
+      // aplica tolerância crescente após 30 tentativas
+      if (i >= 30) {
+        const toleranciaAtual = melhorMetric + baseTolerancia * Math.pow(2, (i - 30) / 10);
+
+        if (metric <= toleranciaAtual) {
+          melhorDistribuicao = grupos;
+          break; // aceitável, encerra cedo
+        }
       }
     }
 
