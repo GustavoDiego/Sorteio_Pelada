@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+
+<div class="login-wrapper">
+  <form [formGroup]="form" (ngSubmit)="register()" class="login-form">
+    <h2 class="title">Registrar-se</h2>
+
+    <!-- USERNAME -->
+      <input
+        type="text"
+        pInputText
+        formControlName="username"
+        placeholder="Usuário"
+      />
+      <small class="error" *ngIf="form.controls['username'].touched && form.controls['username'].errors?.['required']">
+        Campo obrigatório
+      </small>
+      <small class="error" *ngIf="form.controls['username'].touched && form.controls['username'].errors?.['pattern']">
+        O nome de usuário não pode conter espaços
+      </small>
+
+      <!-- PASSWORD -->
+      <input
+        type="password"
+        pPassword
+        formControlName="password"
+        placeholder="Senha"
+        [feedback]="false"
+      />
+      <small class="error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['required']">
+        Campo obrigatório
+      </small>
+      <small class="error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['minlength']">
+        A senha deve ter no mínimo 8 caracteres
+      </small>
+      <small class="error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['maxlength']">
+        A senha deve ter no máximo 32 caracteres
+      </small>
+      <small class="error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['pattern']">
+        A senha deve conter ao menos uma letra minúscula, uma maiúscula e um número
+      </small>
+
+
+    <button pButton type="submit" [disabled]="loading">Cadastrar</button>
+
+    <button
+      pButton
+      type="button"
+      class="p-button-text register-button"
+      (click)="goToLogin()"
+    >
+      Já tem conta? Entrar
+    </button>
+
+    <div class="loading" *ngIf="loading">
+      <p-progressSpinner
+        strokeWidth="6"
+        animationDuration="0.5s"
+        styleClass="spinner"
+      />
+    </div>
+  </form>
+</div>

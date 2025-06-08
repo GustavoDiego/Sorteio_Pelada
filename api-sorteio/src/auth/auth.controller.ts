@@ -39,4 +39,12 @@ export class AuthController {
   getProfile(@Request() req) {
     return req.user;
   }
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Retorna os dados do usuário logado' })
+  @ApiResponse({ status: 200, description: 'Usuário autenticado' })
+  async getMe(@Request() req) {
+    return this.authService.getUserById(req.user.sub);
+  }
 }

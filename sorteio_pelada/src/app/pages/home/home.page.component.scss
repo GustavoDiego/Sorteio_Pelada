@@ -1,0 +1,321 @@
+.home-container {
+  padding: 1rem;
+  background-color: #121212;
+  color: white;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .selected-count {
+    font-weight: bold;
+    color: white;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.caption-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1c1c1e;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.search-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+
+  input.p-inputtext {
+    background-color: #1c1c1e;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 8px;
+  }
+}
+
+.p-button-clear {
+  background-color: transparent !important;
+  border: 1px solid #e74c3c !important;
+  color: #e74c3c !important;
+  border-radius: 8px;
+}
+
+.p-table {
+  background-color: #1c1c1e;
+  border-radius: 12px;
+  color: white;
+
+  .p-datatable-table {
+    background-color: #1c1c1e;
+  }
+
+  .p-datatable-thead > tr > th {
+    background-color: #1c1c1e;
+    color: #e74c3c;
+    border-bottom: 1px solid #333;
+    font-weight: 600;
+  }
+
+  .p-datatable-tbody > tr {
+    background-color: #1c1c1e;
+    color: white;
+    border-bottom: 1px solid #2a2a2a;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .p-datatable-tbody > tr:hover {
+    background-color: #2a2a2a;
+  }
+
+  .p-sortable-column {
+    color: white;
+  }
+
+  .p-sortable-column:hover {
+    color: #e74c3c;
+  }
+
+  .p-highlight {
+    background-color: #e74c3c !important;
+    color: white !important;
+  }
+
+  .p-table-checkbox {
+    border-color: #e74c3c;
+  }
+
+  .p-button {
+    background-color: #e74c3c;
+    border: none;
+  }
+
+  .p-button:hover {
+    background-color: #c0392b;
+  }
+
+  .p-button:disabled {
+    background-color: #555 !important;
+    color: #999 !important;
+    cursor: not-allowed;
+  }
+}
+
+
+.p-paginator {
+  background: #1c1c1e;
+  border-top: 1px solid #333;
+  color: white;
+  padding: 1rem 0;
+
+  .p-paginator-page,
+  .p-paginator-next,
+  .p-paginator-prev {
+    color: white;
+    border-radius: 4px;
+
+    &.p-highlight {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+
+  .p-dropdown,
+  .p-dropdown-label {
+    background-color: #1c1c1e;
+    color: white;
+    border-color: #444;
+  }
+}
+:host ::ng-deep .p-datatable-table {
+  background-color: #1c1c1e !important;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr > td {
+  background-color: #1c1c1e !important;
+  color: white !important;
+  border-bottom: 1px solid #2a2a2a !important;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr:hover > td {
+  background-color: #2a2a2a !important;
+}
+
+:host ::ng-deep .p-datatable-tbody > tr.p-highlight > td {
+  background-color: #e74c3c !important;
+  color: white !important;
+}
+::ng-deep .p-datatable-thead > tr > th {
+  background-color: #1c1c1e !important;
+  color: white !important;
+}
+:host ::ng-deep .p-button {
+  background-color: #e74c3c !important;
+  border: none !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-button:hover {
+  background-color: #c0392b !important;
+}
+
+:host ::ng-deep .p-button:disabled {
+  background-color: #555 !important;
+  color: #999 !important;
+  cursor: not-allowed !important;
+}
+
+:host ::ng-deep .p-datatable-caption {
+  background-color: #1c1c1e !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+:host ::ng-deep .p-paginator {
+  background: #1c1c1e !important;
+  border-top: 1px solid #333 !important;
+  color: white !important;
+  padding: 1rem 0 !important;
+}
+
+:host ::ng-deep .p-paginator-page,
+:host ::ng-deep .p-paginator-next,
+:host ::ng-deep .p-paginator-prev {
+  color: white !important;
+  background: transparent !important;
+  border: none !important;
+  margin: 0 4px;
+}
+
+:host ::ng-deep .p-paginator-page.p-highlight {
+  background-color: #e74c3c !important;
+  color: white !important;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-paginator-page:hover,
+:host ::ng-deep .p-paginator-next:hover,
+:host ::ng-deep .p-paginator-prev:hover {
+  background-color: #333 !important;
+}
+
+:host ::ng-deep .p-dropdown {
+  background-color: #1c1c1e !important;
+  border-color: #444 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-dropdown-label {
+  color: white !important;
+}
+:host ::ng-deep .p-datatable-tbody > tr > td,
+:host ::ng-deep .p-datatable-thead > tr > th {
+  letter-spacing: 0.5px;
+}
+:host ::ng-deep .p-paginator,
+:host ::ng-deep .p-dropdown-label,
+:host ::ng-deep .p-inputtext {
+  letter-spacing: 0.5px;
+}
+:host ::ng-deep .p-button {
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+:host ::ng-deep .p-datatable-header {
+  background-color: #1c1c1e !important;
+  color: #e74c3c !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #333;
+  padding: 1rem;
+}
+:host ::ng-deep .p-datatable-thead > tr > th {
+  background-color: #1c1c1e !important;
+  color: #e74c3c !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #333;
+}
+:host ::ng-deep .p-datatable-caption {
+  color: white !important;
+  letter-spacing: 0.5px;
+}
+:host ::ng-deep .p-dropdown {
+  background-color: #1c1c1e !important;
+  border: 1px solid #444 !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep .p-dropdown-label {
+  color: white !important;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-dropdown-panel {
+  background-color: #1c1c1e !important;
+  color: white !important;
+  border: 1px solid #333 !important;
+}
+
+:host ::ng-deep .p-dropdown-item {
+  color: white !important;
+
+  &:hover {
+    background-color: #2a2a2a !important;
+  }
+}
+
+:host ::ng-deep .p-dropdown-item.p-highlight {
+  background-color: #e74c3c !important;
+  color: white !important;
+}
+:host ::ng-deep .p-paginator-rpp-dropdown {
+  background-color: #1c1c1e !important;
+  border: 1px solid #444 !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep .p-paginator-rpp-dropdown .p-dropdown-label {
+  color: white !important;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-paginator-rpp-dropdown .p-dropdown-panel {
+  background-color: #1c1c1e !important;
+  color: white !important;
+  border: 1px solid #333 !important;
+}
+
+:host ::ng-deep .p-paginator-rpp-dropdown .p-dropdown-item {
+  color: white !important;
+}
+
+:host ::ng-deep .p-paginator-rpp-dropdown .p-dropdown-item:hover {
+  background-color: #2a2a2a !important;
+}
+
+:host ::ng-deep .p-paginator-rpp-dropdown .p-dropdown-item.p-highlight {
+  background-color: #e74c3c !important;
+  color: white !important;
+}

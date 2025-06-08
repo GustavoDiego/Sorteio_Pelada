@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+
+<div class="login-wrapper">
+  <form [formGroup]="form" (ngSubmit)="login()" class="login-form">
+    <h2 class="title">Entrar</h2>
+
+    <input
+      type="text"
+      pInputText
+      formControlName="username"
+      placeholder="Usuário"
+    />
+
+    <input
+      type="password"
+      pPassword
+      formControlName="password"
+      placeholder="Senha"
+      [feedback]="false"
+    />
+
+    <button pButton type="submit" [disabled]="loading">Entrar</button>
+
+    <button
+      pButton
+      type="button"
+      class="p-button-text register-button"
+      (click)="navigateToRegister()"
+    >
+      Registrar-se
+    </button>
+
+    <div class="loading" *ngIf="loading">
+      <p-progressSpinner
+        strokeWidth="6"
+        animationDuration="0.5s"
+        styleClass="spinner"
+      />
+    </div>
+  </form>
+</div>

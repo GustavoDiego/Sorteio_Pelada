@@ -1,0 +1,25 @@
+<div class="navbar">
+  <div class="username">
+    {{ username | usernameFormat }}
+  </div>
+
+  <div class="button-group">
+    <button
+      pButton
+      class="nav-btn"
+      (click)="goHome()"
+      aria-label="Página inicial">
+      <i class="pi pi-home"></i>
+      <span>Início</span>
+    </button>
+
+    <button
+      pButton
+      class="nav-btn"
+      (click)="logout()"
+      aria-label="Sair">
+      <i class="pi pi-sign-out"></i>
+      <span>Sair</span>
+    </button>
+  </div>
+</div>

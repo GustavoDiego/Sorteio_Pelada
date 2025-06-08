@@ -47,4 +47,5 @@ export class AuthService {
   async getUserById(id: string) {
     return this.usersService.findById(id);
   }
+  
 }
