@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
     const ref = this.dialog.open(RegistroJogadorModalComponent, {
         header: '',
         width: '70vw',
-        contentStyle: { padding: '0' }, // remove padding extra
+        contentStyle: { padding: '0' },
         dismissableMask: true,
         closable: false,
         styleClass: 'no-dialog-wrapper'

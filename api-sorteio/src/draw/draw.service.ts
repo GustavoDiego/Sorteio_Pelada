@@ -6,10 +6,7 @@ import { TeamResult } from 'src/shared/interfaces/teamResult.interface';
 export class DrawService {
   private readonly attrs = ['forca', 'velocidade', 'passe', 'chute', 'corpo', 'esperteza'] as const;
 
-  /**
-   * Sorteia times obedecendo a regra: preencher cada time até o tamanho
-   * máximo e deixar o último com o restante (ex.: 10 jogadores, 3 times, 4/jogo → 4‑4‑2).
-   */
+
   sortearTimes(jogadores: Player[], numeroDeTimes: number, tamanhoPorTime: number): Player[][] {
     if (jogadores.length < numeroDeTimes) {
       throw new Error('Número de jogadores insuficiente para a quantidade de times');
@@ -57,10 +54,7 @@ export class DrawService {
     return { times: melhor, metric: melhorMetric };
   }
 
-  /**
-   * Distribuição por blocos: preenche cada time até o limite antes de passar ao próximo.
-   * Se tamanhoPorTime = 0 (ilimitado) usa round‑robin antigo.
-   */
+
   private distribuir(jogadores: Player[], k: number, tamanho: number): Player[][] {
     if (tamanho > 0) {
       const times: Player[][] = [];
@@ -74,7 +68,7 @@ export class DrawService {
       return times;
     }
 
-    // Sem limite de tamanho: round‑robin
+
     const times: Player[][] = Array.from({ length: k }, () => []);
     jogadores.forEach((j, i) => times[i % k].push(j));
     return times;

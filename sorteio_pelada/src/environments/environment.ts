@@ -20,7 +20,7 @@ export const environment : AppEnvironment= {
       protocol: 'http',
       host: 'localhost',
       port: '3000',
-      root: '', // sem "/api"
+      root: '',
       endpoints: {
         'login': 'auth/login',
         'register': 'auth/register',
