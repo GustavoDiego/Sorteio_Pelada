@@ -63,7 +63,7 @@ export class LoginPage implements OnInit {
 
     this.authService.login(data).subscribe({
       next: res => {
-        const username = res?.username || data.username
+        const username = res?.user?.username || res?.username || data.username
         this.authService.setUserFromLogin(username)
         this.message.add({
           severity: 'success',

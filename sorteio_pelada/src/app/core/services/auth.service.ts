@@ -16,6 +16,11 @@ export class AuthService {
     return this.http.post<AuthResponse>(resolve('api://login'), data).pipe(
       tap(res => {
         storage.set('token', res.access_token)
+        const username = res.user?.username ?? res.username
+        if (username) {
+          const id = res.user?.id ?? 'local'
+          storage.set<User>('user', { id, username })
+        }
       })
     )
   }
