@@ -59,13 +59,27 @@ export class LoginPage implements OnInit {
 
     this.loading = true
 
-    this.authService.login(this.form.getRawValue()).subscribe({
+    const data = this.form.getRawValue()
+
+    this.authService.login(data).subscribe({
       next: () => {
+        this.authService.setUserFromLogin(data.username)
         this.message.add({
           severity: 'success',
           summary: 'Login realizado',
           detail: 'Bem-vindo!',
           life: 2000
+        })
+
+        this.authService.getProfile().subscribe({
+          error: () => {
+            this.message.add({
+              severity: 'warn',
+              summary: 'Aviso',
+              detail: 'Login ok, mas falha ao carregar perfil',
+              life: 2000
+            })
+          }
         })
 
         setTimeout(() => {

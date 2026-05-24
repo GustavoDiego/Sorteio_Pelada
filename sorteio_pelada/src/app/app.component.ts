@@ -12,6 +12,8 @@ export class AppComponent {
   title = 'sorteio_pelada';
 
   constructor(private auth: AuthService){
-    auth.getProfile()
+    if (auth.isLoggedIn()) {
+      auth.getProfile().subscribe()
+    }
   }
 }

@@ -34,6 +34,10 @@ export class AuthService {
     )
   }
 
+  setUserFromLogin(username: string): void {
+    storage.set<User>('user', { id: 'local', username })
+  }
+
   logout(): void {
     storage.remove('token')
     storage.remove('user')
