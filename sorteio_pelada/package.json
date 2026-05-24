@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "npm run build && node scripts/prepare-fly-deploy.cjs && fly deploy -c angular-deploy/fly.toml -f angular-deploy/Dockerfile",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

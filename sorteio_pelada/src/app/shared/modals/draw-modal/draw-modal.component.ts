@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { Player } from '../../../core/models/player.model'
 import { DrawService } from '../../../core/services/draw.service'
+import { drawStateStorage } from '../../../core/utils/draw-state'
 
 @Component({
   selector: 'app-draw-modal',
@@ -61,6 +62,11 @@ export class DrawModalComponent {
 
     this.recalcularTimes()
     this.loading = true
+
+    drawStateStorage.set({
+      jogadores: this.jogadores,
+      jogadoresPorTime: this.jogadoresPorTime
+    })
 
     this.drawService.sortear(this.jogadores, this.numeroDeTimes, this.jogadoresPorTime).subscribe({
       next: times => {

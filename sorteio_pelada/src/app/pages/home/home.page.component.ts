@@ -15,10 +15,11 @@ import { RegistroJogadorModalComponent } from '../../shared/modals/registro-joga
 import { EditarJogadorModalComponent } from '../../shared/modals/editar-jogador-modal/editar-jogador-modal.component'
 import { DrawModalComponent } from '../../shared/modals/draw-modal/draw-modal.component'
 import { Router } from '@angular/router'
+import { drawStateStorage } from '../../core/utils/draw-state'
 
 @Component({
   standalone: true,
-  imports : [ NavbarComponent,
+  imports: [NavbarComponent,
     FormsModule,
     TableModule,
     ButtonModule,
@@ -35,7 +36,7 @@ import { Router } from '@angular/router'
 })
 export class HomePage implements OnInit {
   players: Player[] = []
-  selectedPlayers: Player[] = []
+  private _selectedPlayers: Player[] = []
   loading = false
   searchValue = ''
 
@@ -45,21 +46,32 @@ export class HomePage implements OnInit {
     private message: MessageService,
     private dialog: DialogService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    drawStateStorage.clear()
+    this._selectedPlayers = []
     this.loadPlayers()
   }
+
+  get selectedPlayers(): Player[] {
+    return this._selectedPlayers
+  }
+
+  set selectedPlayers(value: Player[]) {
+    this._selectedPlayers = value ?? []
+    drawStateStorage.set({ jogadores: this._selectedPlayers })
+  }
   onSearchInput(event: Event, dt: any) {
-      const input = event.target as HTMLInputElement
-      const value = input?.value ?? ''
-      dt.filterGlobal(value, 'contains')
-    }
+    const input = event.target as HTMLInputElement
+    const value = input?.value ?? ''
+    dt.filterGlobal(value, 'contains')
+  }
 
   clearFilters(table: any) {
-  this.searchValue = ''
-  table.clear()
-}
+    this.searchValue = ''
+    table.clear()
+  }
 
   loadPlayers() {
     this.loading = true
@@ -77,13 +89,13 @@ export class HomePage implements OnInit {
 
   openCreateModal() {
     const ref = this.dialog.open(RegistroJogadorModalComponent, {
-        header: '',
-        width: '70vw',
-        contentStyle: { padding: '0' },
-        dismissableMask: true,
-        closable: false,
-        styleClass: 'no-dialog-wrapper'
-      })
+      header: '',
+      width: '70vw',
+      contentStyle: { padding: '0' },
+      dismissableMask: true,
+      closable: false,
+      styleClass: 'no-dialog-wrapper'
+    })
 
     ref.onClose.subscribe(result => {
       if (result) {

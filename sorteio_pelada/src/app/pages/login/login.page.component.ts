@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { Router } from '@angular/router'
@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api'
 import { AuthService } from '../../core/services/auth.service'
 import { LoginDto } from '../../core/models/login.dto'
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
+import { drawStateStorage } from '../../core/utils/draw-state'
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner'
   templateUrl: './login.page.component.html',
   styleUrls: ['./login.page.component.scss']
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   loading = false
   form: FormGroup
 
@@ -44,8 +45,12 @@ export class LoginPage {
     })
 
   }
+
+  ngOnInit(): void {
+    drawStateStorage.clear()
+  }
   navigateToRegister() {
-     this.router.navigateByUrl('/register')
+    this.router.navigateByUrl('/register')
   }
 
 

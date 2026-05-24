@@ -5,6 +5,8 @@ import { NavbarComponent } from '../../shared/components/navbar/navbar.component
 import { ButtonModule } from 'primeng/button'
 import html2canvas from 'html2canvas'
 import { Player } from '../../core/models/player.model'
+import { DrawService } from '../../core/services/draw.service'
+import { DrawState, drawStateStorage } from '../../core/utils/draw-state'
 
 @Component({
   selector: 'app-draw-page',
@@ -18,20 +20,61 @@ export class DrawPageComponent implements OnInit {
   times: Player[][] = []
   @ViewChild('captureArea', { static: false }) captureArea!: ElementRef<HTMLDivElement>
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private drawService: DrawService
+  ) { }
 
   ngOnInit(): void {
     const state = history.state
-    if (!state.times || !Array.isArray(state.times)) {
-
-      this.router.navigate(['/home'])
-    } else {
+    if (state.times && Array.isArray(state.times)) {
       this.times = state.times
+      return
     }
+
+    const stored = drawStateStorage.get()
+    if (stored?.jogadores?.length && stored.jogadoresPorTime > 0) {
+      this.sortearComEstado(stored)
+      return
+    }
+
+    this.router.navigate(['/home'])
   }
 
   resortear() {
-    this.router.navigate(['/home'])
+    const stored = drawStateStorage.get()
+    if (!stored?.jogadores?.length || !stored.jogadoresPorTime) {
+      this.router.navigate(['/home'])
+      return
+    }
+
+    this.sortearComEstado({
+      ...stored,
+      jogadores: this.shufflePlayers(stored.jogadores)
+    })
+  }
+
+  private sortearComEstado(state: DrawState): void {
+    const numeroDeTimes = Math.ceil(state.jogadores.length / state.jogadoresPorTime)
+
+    this.drawService.sortear(state.jogadores, numeroDeTimes, state.jogadoresPorTime).subscribe({
+      next: times => {
+        this.times = times
+      },
+      error: error => {
+        console.error('Falha ao resortear:', error)
+      }
+    })
+  }
+
+  private shufflePlayers(players: Player[]): Player[] {
+    const shuffled = [...players]
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1))
+        ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+
+    return shuffled
   }
 
   async compartilhar() {
