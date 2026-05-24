@@ -20,6 +20,8 @@
       class="p-button resortear"
       label="Resortear"
       icon="pi pi-refresh"
+      [loading]="resortearLoading"
+      [disabled]="resortearLoading"
       (click)="resortear()"
     ></button>
 

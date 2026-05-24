@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component'
 import { ButtonModule } from 'primeng/button'
 import html2canvas from 'html2canvas'
+import { finalize } from 'rxjs'
 import { Player } from '../../core/models/player.model'
 import { DrawService } from '../../core/services/draw.service'
 import { DrawState, drawStateStorage } from '../../core/utils/draw-state'
@@ -18,6 +19,7 @@ import { DrawState, drawStateStorage } from '../../core/utils/draw-state'
 })
 export class DrawPageComponent implements OnInit {
   times: Player[][] = []
+  resortearLoading = false
   @ViewChild('captureArea', { static: false }) captureArea!: ElementRef<HTMLDivElement>
 
   constructor(
@@ -48,6 +50,8 @@ export class DrawPageComponent implements OnInit {
       return
     }
 
+    this.resortearLoading = true
+
     this.sortearComEstado({
       ...stored,
       jogadores: this.shufflePlayers(stored.jogadores)
@@ -57,14 +61,21 @@ export class DrawPageComponent implements OnInit {
   private sortearComEstado(state: DrawState): void {
     const numeroDeTimes = Math.ceil(state.jogadores.length / state.jogadoresPorTime)
 
-    this.drawService.sortear(state.jogadores, numeroDeTimes, state.jogadoresPorTime).subscribe({
-      next: times => {
-        this.times = times
-      },
-      error: error => {
-        console.error('Falha ao resortear:', error)
-      }
-    })
+    this.drawService
+      .sortear(state.jogadores, numeroDeTimes, state.jogadoresPorTime)
+      .pipe(
+        finalize(() => {
+          this.resortearLoading = false
+        })
+      )
+      .subscribe({
+        next: times => {
+          this.times = times
+        },
+        error: error => {
+          console.error('Falha ao resortear:', error)
+        }
+      })
   }
 
   private shufflePlayers(players: Player[]): Player[] {
