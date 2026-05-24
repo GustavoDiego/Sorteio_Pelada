@@ -18,9 +18,9 @@ export class NavbarComponent {
     private auth: AuthService
   ) {}
     ngOnInit() {
-    this.auth.getProfile().subscribe(user => {
-      console.log('Perfil carregado:', user)
-    })
+    if (!this.auth.getUser()) {
+      this.auth.getProfile().subscribe()
+    }
   }
   logout() {
     this.auth.logout()

@@ -62,8 +62,9 @@ export class LoginPage implements OnInit {
     const data = this.form.getRawValue()
 
     this.authService.login(data).subscribe({
-      next: () => {
-        this.authService.setUserFromLogin(data.username)
+      next: res => {
+        const username = res?.username || data.username
+        this.authService.setUserFromLogin(username)
         this.message.add({
           severity: 'success',
           summary: 'Login realizado',
@@ -71,16 +72,18 @@ export class LoginPage implements OnInit {
           life: 2000
         })
 
-        this.authService.getProfile().subscribe({
-          error: () => {
-            this.message.add({
-              severity: 'warn',
-              summary: 'Aviso',
-              detail: 'Login ok, mas falha ao carregar perfil',
-              life: 2000
-            })
-          }
-        })
+        if (!this.authService.getUser()) {
+          this.authService.getProfile().subscribe({
+            error: () => {
+              this.message.add({
+                severity: 'warn',
+                summary: 'Aviso',
+                detail: 'Login ok, mas falha ao carregar perfil',
+                life: 2000
+              })
+            }
+          })
+        }
 
         setTimeout(() => {
           this.router.navigateByUrl('/home')

@@ -13,12 +13,12 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(data: LoginDto): Observable<AuthResponse> {
-   return this.http.post<{ access_token: string }>(resolve('api://login'), data).pipe(
-    tap(res => {
-      storage.set('token', res.access_token)
-    })
-  )
-}
+    return this.http.post<AuthResponse>(resolve('api://login'), data).pipe(
+      tap(res => {
+        storage.set('token', res.access_token)
+      })
+    )
+  }
 
   register(data: RegisterDto): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(resolve('api://register'), data).pipe(
@@ -30,7 +30,11 @@ export class AuthService {
 
   getProfile(): Observable<User> {
     return this.http.get<User>(resolve('api://me')).pipe(
-      tap(user => storage.set('user', user))
+      tap(user => {
+        if (user && user.username) {
+          storage.set('user', user)
+        }
+      })
     )
   }
 
