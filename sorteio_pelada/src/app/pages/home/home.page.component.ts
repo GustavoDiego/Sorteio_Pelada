@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    drawStateStorage.clear()
+    drawStateStorage.clearJogadores()
     this._selectedPlayers = []
     this.loadPlayers()
   }

@@ -24,5 +24,9 @@ export const drawStateStorage = {
 
     clear(): void {
         storage.remove(DRAW_STATE_KEY)
+    },
+
+    clearJogadores(): void {
+        this.set({ jogadores: [] })
     }
 }

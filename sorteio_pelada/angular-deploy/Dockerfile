@@ -6,4 +6,6 @@ WORKDIR /app
 
 COPY . .
 
-CMD ["serve", "-s", ".", "-l", "8080"]
+WORKDIR /app/angular-deploy
+
+CMD ["serve", "-s", "browser", "-l", "8080"]

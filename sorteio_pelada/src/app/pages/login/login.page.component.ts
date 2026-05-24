@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit(): void {
-    drawStateStorage.clear()
+    drawStateStorage.clearJogadores()
   }
   navigateToRegister() {
     this.router.navigateByUrl('/register')
