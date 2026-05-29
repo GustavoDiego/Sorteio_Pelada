@@ -10,9 +10,10 @@ body {
   position: fixed;
   top: calc(1rem + env(safe-area-inset-top));
   right: calc(1rem + env(safe-area-inset-right));
+  left: auto;
   z-index: 11000;
-  width: calc(100vw - 2rem);
-  max-width: 420px;
+  width: 360px;
+  max-width: calc(100vw - 2rem);
 }
 
 @media (max-width: 640px) {
