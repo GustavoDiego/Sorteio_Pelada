@@ -1,28 +1,22 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import { DrawService } from './draw.service';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { Player } from 'src/shared/interfaces/player.interface';
-import { ApiTags, ApiBearerAuth, ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-
-class DrawRequestBody {
-  jogadores: Player[];
-  numeroDeTimes: number;
-  tamanhoPorTime: number;
-}
+import { DrawRequestDto } from './dto/draw-request.dto';
+import { DrawService } from './draw.service';
 
 @ApiTags('draw')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('draw')
 export class DrawController {
-  constructor(private readonly drawService: DrawService) {}
+  constructor(private readonly drawService: DrawService) { }
 
   @Post()
   @ApiOperation({ summary: 'Realiza o sorteio de jogadores em times balanceados' })
-  @ApiBody({ type: DrawRequestBody })
+  @ApiBody({ type: DrawRequestDto })
   @ApiResponse({ status: 201, description: 'Times gerados com sucesso' })
   @ApiResponse({ status: 400, description: 'Dados inválidos ou insuficientes' })
-  realizarSorteio(@Body() body: DrawRequestBody) {
+  realizarSorteio(@Body() body: DrawRequestDto) {
     const { jogadores, numeroDeTimes, tamanhoPorTime } = body;
     return this.drawService.sortearTimes(jogadores, numeroDeTimes, tamanhoPorTime);
   }
