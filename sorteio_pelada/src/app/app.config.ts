@@ -12,6 +12,7 @@ import { authInterceptor } from './core/interceptors/interceptor'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 import { providePrimeNG } from 'primeng/config'
+import { MessageService } from 'primeng/api'
 import Lara from '@primeng/themes/lara'
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         preset: Lara
       }
     }),
+    MessageService,
     importProvidersFrom(
       ToastModule,
       TableModule,

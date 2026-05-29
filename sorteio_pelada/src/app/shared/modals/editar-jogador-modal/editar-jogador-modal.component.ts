@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DynamicDialogConfig, DynamicDialogRef, DynamicDialogModule } from 'primeng/dynamicdialog'
-import { ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { InputTextModule } from 'primeng/inputtext'
 import { ButtonModule } from 'primeng/button'
@@ -20,11 +19,9 @@ import { DialogService } from 'primeng/dynamicdialog'
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    ToastModule,
     ProgressSpinnerModule,
     DynamicDialogModule
   ],
-  providers: [MessageService],
   templateUrl: './editar-jogador-modal.component.html',
   styleUrls: ['./editar-jogador-modal.component.scss']
 })

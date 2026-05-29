@@ -1,12 +1,26 @@
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
 body {
   font-family: 'Russo One', sans-serif;
   background-color: #121212;
   color: white;
+}
+
+.app-toast {
+  position: fixed;
+  top: calc(1rem + env(safe-area-inset-top));
+  right: calc(1rem + env(safe-area-inset-right));
+  z-index: 11000;
+  width: calc(100vw - 2rem);
+  max-width: 420px;
+}
+
+@media (max-width: 640px) {
+  .app-toast {
+    left: calc(1rem + env(safe-area-inset-left));
+    right: calc(1rem + env(safe-area-inset-right));
+    width: auto;
+  }
 }
 
 .no-dialog-wrapper .p-dialog {

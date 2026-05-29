@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'sorteio_pelada';
 
-  constructor(private auth: AuthService){
+  constructor(private auth: AuthService) {
     if (auth.isLoggedIn()) {
       auth.getProfile().subscribe()
     }

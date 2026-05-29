@@ -32,7 +32,7 @@ import { drawStateStorage } from '../../core/utils/draw-state'
   selector: 'app-home',
   templateUrl: './home.page.component.html',
   styleUrls: ['./home.page.component.scss'],
-  providers: [ConfirmationService, MessageService, DialogService]
+  providers: [ConfirmationService, DialogService]
 })
 export class HomePage implements OnInit {
   players: Player[] = []

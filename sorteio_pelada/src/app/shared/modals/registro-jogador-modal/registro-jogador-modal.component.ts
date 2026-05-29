@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common'
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { DialogService, DynamicDialogModule, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog'
 
-import { ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { InputTextModule } from 'primeng/inputtext'
 import { ButtonModule } from 'primeng/button'
@@ -20,10 +19,8 @@ import { PlayersService } from '../../../core/services/players.service'
     InputTextModule,
     ButtonModule,
     PasswordModule,
-    ToastModule,
     ProgressSpinnerModule
   ],
-  providers: [MessageService],
   templateUrl: './registro-jogador-modal.component.html',
   styleUrls: ['./registro-jogador-modal.component.scss']
 })

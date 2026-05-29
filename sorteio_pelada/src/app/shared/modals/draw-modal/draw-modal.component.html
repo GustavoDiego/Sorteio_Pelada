@@ -1,5 +1,3 @@
-<p-toast></p-toast>
-
 <div class="draw-modal-container">
   <button class="close-button" type="button" (click)="dialogRef.close()">×</button>
 
@@ -7,17 +5,8 @@
     <h2 class="title">Sortear Times</h2>
 
     <label for="jogadoresPorTime">Jogadores por time</label>
-    <input
-      id="jogadoresPorTime"
-      type="number"
-      pInputText
-      min="1"
-      [max]="maxJogadores"
-      [(ngModel)]="jogadoresPorTime"
-      (ngModelChange)="recalcularTimes()"
-      name="jogadoresPorTime"
-      required
-    />
+    <input id="jogadoresPorTime" type="number" pInputText min="1" [max]="maxJogadores" [(ngModel)]="jogadoresPorTime"
+      (ngModelChange)="recalcularTimes()" name="jogadoresPorTime" required />
 
     <div class="info">
       Serão formados {{ numeroDeTimes }} times

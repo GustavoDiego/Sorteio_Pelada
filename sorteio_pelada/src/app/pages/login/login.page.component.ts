@@ -5,7 +5,6 @@ import { Router } from '@angular/router'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
-import { Toast, ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { AuthService } from '../../core/services/auth.service'
 import { LoginDto } from '../../core/models/login.dto'
@@ -21,11 +20,8 @@ import { drawStateStorage } from '../../core/utils/draw-state'
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    ToastModule,
-    ProgressSpinnerModule,
-    Toast
+    ProgressSpinnerModule
   ],
-  providers: [MessageService],
   templateUrl: './login.page.component.html',
   styleUrls: ['./login.page.component.scss']
 })

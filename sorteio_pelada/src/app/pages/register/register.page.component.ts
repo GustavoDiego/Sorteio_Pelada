@@ -5,7 +5,6 @@ import { Router } from '@angular/router'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
-import { Toast, ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { AuthService } from '../../core/services/auth.service'
 import { RegisterDto } from '../../core/models/register.dto'
@@ -20,11 +19,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner'
     InputTextModule,
     PasswordModule,
     ButtonModule,
-    ToastModule,
-    ProgressSpinnerModule,
-    Toast
+    ProgressSpinnerModule
   ],
-  providers: [MessageService],
   templateUrl: './register.page.component.html',
   styleUrls: ['./register.page.component.scss']
 })
@@ -40,20 +36,20 @@ export class RegisterPage {
     private message: MessageService
   ) {
     this.form = this.fb.nonNullable.group({
-        username: [
-          '',
-          [Validators.required, Validators.pattern(/^\S+$/)]
-        ],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(32),
-            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
-          ]
+      username: [
+        '',
+        [Validators.required, Validators.pattern(/^\S+$/)]
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(32),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
         ]
-      })
+      ]
+    })
 
 
   }

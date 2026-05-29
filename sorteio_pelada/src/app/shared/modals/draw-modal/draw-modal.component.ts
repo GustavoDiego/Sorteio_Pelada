@@ -5,7 +5,6 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
-import { ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { Player } from '../../../core/models/player.model'
 import { DrawService } from '../../../core/services/draw.service'
@@ -19,10 +18,8 @@ import { drawStateStorage } from '../../../core/utils/draw-state'
     FormsModule,
     InputTextModule,
     ButtonModule,
-    ProgressSpinnerModule,
-    ToastModule
+    ProgressSpinnerModule
   ],
-  providers: [MessageService],
   templateUrl: './draw-modal.component.html',
   styleUrls: ['./draw-modal.component.scss']
 })
