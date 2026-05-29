@@ -9,29 +9,17 @@
     <div *ngFor="let team of times; let i = index" class="time-card">
       <h2 class="team-title">Time {{ i + 1 }}</h2>
       <ul class="players-list">
-        <li *ngFor="let jogador of team">{{ jogador.Nome }}</li>
+        <li *ngFor="let jogador of team">{{ jogador.nome }}</li>
       </ul>
     </div>
   </div>
 
   <div class="botoes">
-    <button
-      pButton
-      class="p-button resortear"
-      label="Resortear"
-      icon="pi pi-refresh"
-      [loading]="resortearLoading"
-      [disabled]="resortearLoading"
-      (click)="resortear()"
-    ></button>
+    <button pButton class="p-button resortear" label="Resortear" icon="pi pi-refresh" [loading]="resortearLoading"
+      [disabled]="resortearLoading" (click)="resortear()"></button>
 
-    <button
-      pButton
-      class="p-button compartilhar"
-      label="Compartilhar"
-      icon="pi pi-share-alt"
-      (click)="compartilhar()"
-    ></button>
+    <button pButton class="p-button compartilhar" label="Compartilhar" icon="pi pi-share-alt"
+      (click)="compartilhar()"></button>
 
   </div>
 </div>

@@ -44,18 +44,18 @@ export class EditarJogadorModalComponent {
   ) {
     this.jogador = this.config.data.jogador
     console.log(this.jogador)
-      this.form = this.fb.nonNullable.group({
-        nome: [this.jogador.Nome, Validators.required],
-        forca: [this.jogador.Força, Validators.required],
-        velocidade: [this.jogador.Velocidade, Validators.required],
-        passe: [this.jogador.Passe, Validators.required],
-        chute: [this.jogador.Chute, Validators.required],
-        corpo: [this.jogador.Corpo, Validators.required],
-        esperteza: [this.jogador.Esperteza, Validators.required]
-      })
+    this.form = this.fb.nonNullable.group({
+      nome: [this.jogador.nome, Validators.required],
+      forca: [this.jogador.forca, Validators.required],
+      velocidade: [this.jogador.velocidade, Validators.required],
+      passe: [this.jogador.passe, Validators.required],
+      chute: [this.jogador.chute, Validators.required],
+      corpo: [this.jogador.corpo, Validators.required],
+      esperteza: [this.jogador.esperteza, Validators.required]
+    })
 
   }
-  campos = ['nome','forca','velocidade','passe','chute','corpo','esperteza']
+  campos = ['nome', 'forca', 'velocidade', 'passe', 'chute', 'corpo', 'esperteza']
 
   formatarLabel(campo: string): string {
     return campo.charAt(0).toUpperCase() + campo.slice(1)
@@ -81,12 +81,12 @@ export class EditarJogadorModalComponent {
     })
   }
   getErrorMessage(campo: string): string {
-      const control = this.form.get(campo)
-      if (control?.hasError('required')) return 'Campo obrigatório'
-      if (control?.hasError('min')) return 'Valor mínimo é 0'
-      if (control?.hasError('max')) return 'Valor máximo é 5'
-      return ''
-    }
+    const control = this.form.get(campo)
+    if (control?.hasError('required')) return 'Campo obrigatório'
+    if (control?.hasError('min')) return 'Valor mínimo é 0'
+    if (control?.hasError('max')) return 'Valor máximo é 5'
+    return ''
+  }
 
   confirmarRemocao() {
     const ref = this.dialog.open(ConfirmacaoRemocaoModalComponent, {

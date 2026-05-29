@@ -127,7 +127,7 @@ export class HomePage implements OnInit {
         this.message.add({
           severity: 'success',
           summary: 'Jogador atualizado',
-          detail: `Jogador ${player.Nome} foi editado com sucesso`
+          detail: `Jogador ${player.nome} foi editado com sucesso`
         })
         this.loadPlayers()
       }
