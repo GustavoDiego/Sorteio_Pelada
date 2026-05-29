@@ -1,35 +1,43 @@
-import { IsString, IsNumber, Min, Max } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsInt, IsNotEmpty, IsString, Max, Min } from 'class-validator';
 
 export class CreatePlayerDto {
   @IsString()
+  @IsNotEmpty()
   nome: string;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   forca: number;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   velocidade: number;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   passe: number;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   chute: number;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   corpo: number;
 
-  @IsNumber()
+  @Type(() => Number)
+  @IsInt()
   @Min(0)
   @Max(5)
   esperteza: number;

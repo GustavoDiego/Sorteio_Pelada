@@ -243,7 +243,7 @@ export class DrawService {
       const scoreA = this.totalScore(a);
       const scoreB = this.totalScore(b);
       if (scoreA !== scoreB) return scoreB - scoreA;
-      return String((a as any).Nome ?? '').localeCompare(String((b as any).Nome ?? ''));
+      return String((a as any).nome ?? '').localeCompare(String((b as any).nome ?? ''));
     });
 
     return sorted;
